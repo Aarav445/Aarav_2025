@@ -1,11 +1,11 @@
-title: Aarav's Websit  
+title: Aarav's Amazing Website 
 description: "Class of 2027"
 owner_name: Aarav Sonara
 github_username: Aarav445
 github_repo: "Aaravstudent2025" 
 baseurl: "/student_2025"
 future: true
-remote_theme: jekyll/minima
+remote_theme: pages-themes/hacker@v0.2.0
 minima:
   skin: dark
   social_links:
@@ -22,5 +22,13 @@ plugins:
 header_pages:
   - navigation/blog.md
   - navigation/search.md
-  - navigation/about.md
+  - navigation/aboutme.md
+  - navigation/Overwatch Rant.md
   - README4YML.md
+ 
+
+
+
+  
+
+
