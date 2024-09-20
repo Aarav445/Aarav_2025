@@ -1,7 +1,7 @@
 ---
 layout: base
 title: Student Home 
-description: Home Page
+description: Home Page for Aarav
 hide: true
 ---
 
