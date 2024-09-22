@@ -2,8 +2,8 @@ title: Aarav's Amazing Website
 description: "Class of 2025"
 owner_name: Aarav Sonara
 github_username: Aarav445
-github_repo: "Aaravstudent2025" 
-baseurl: "/student_2025"
+github_repo: "Aarav_2025" 
+baseurl: "/Aarav_2025"
 future: true
 remote_theme: pages-themes/time-machine@v0.2.0
 minima:
