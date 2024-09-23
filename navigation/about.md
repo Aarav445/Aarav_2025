@@ -1,8 +1,9 @@
 ---
-layout: about 
+layout: post
 title: About Me
 permalink: /about/
-comments: true
+Toc: True
+comments: True
 ---
 Hi my name is Aarav and my favorite sport to play is basketball. I love to play basketball because I enjoy the feeling of shooting a perfect shot into the hoop and hearing the satisfying swish sound.
 I also like to play basketball because it is very fast paced and intense. Some of my favorite basketball players are LeBron James, Steph Curry, Kobe Bryant, and Micheal Jordan.
