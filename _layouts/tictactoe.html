@@ -41,6 +41,8 @@
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
         </select>
+        <label for="aiFirst">AI goes first:</label>
+        <input type="checkbox" id="aiFirst">
         <button id="startGame">Start Game</button>
     </div>
     
@@ -62,6 +64,11 @@
             currentPlayer = 'X';
             document.getElementById('status').innerText = "Player X's turn";
             renderBoard();
+            if (document.getElementById('aiFirst').checked) {
+                currentPlayer = 'O';
+                document.getElementById('status').innerText = "AI's turn";
+                setTimeout(() => aiMove(), 500);
+            }
         }
 
         function renderBoard() {
