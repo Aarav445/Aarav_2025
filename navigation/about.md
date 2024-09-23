@@ -4,7 +4,7 @@ title: About Me
 permalink: /about/
 comments: true
 ---
-Hi my name is AARAV and my favorite sport to play is basketball. I love to play basketball because I enjoy the feeling of shooting a perfect shot into the hoop and hearing the satisfying swish sound.
+Hi my name is Aarav and my favorite sport to play is basketball. I love to play basketball because I enjoy the feeling of shooting a perfect shot into the hoop and hearing the satisfying swish sound.
 I also like to play basketball because it is very fast paced and intense. Some of my favorite basketball players are LeBron James, Steph Curry, Kobe Bryant, and Micheal Jordan.
 Another one of my hobbies is playing chess. I love to play chess because it is a game of pure skill and strategy. I also like the fact that you can play online and set a match as low as one minute long or an hour long.
 I have been playing chess since I was a kid and I am around 1200 elo on chess.com

@@ -1,28 +1,219 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: auto;
+            background-color: black; /* Background color changed to black */
+        }
+        #settings {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #gameControls {
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: white;">Snake Game</h1>
 
-{% if site.remote_theme contains 'minima' %}
-  {%- include theme/minima/base.html -%}
-{% elsif site.remote_theme contains 'midnight' %}
-  {%- include theme/midnight/base.html -%}
-{% elsif site.remote_theme contains 'dinky' %}
-  {%- include theme/dinky/base.html -%}
-{% elsif site.remote_theme contains 'time-machine' %}
-  {%- include theme/time-machine/base.html -%}
-{% elsif site.remote_theme contains 'cayman' %}
-  {%- include theme/cayman/base.html -%}
-{% endif %}
+    <div id="settings">
+        <label for="speed">Choose Speed: </label>
+        <input type="number" id="speed" value="100" min="50" max="500" step="10">
+        <br><br>
+        <label for="foodCount">Number of Red Squares (1-10): </label>
+        <input type="number" id="foodCount" value="1" min="1" max="10">
+        <br><br>
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    
+    <div id="gameControls">
+        <button onclick="pauseGame()">Pause/Resume</button>
+        <button onclick="restartGame()">Restart Game</button>
+    </div>
+
+    <h2 id="score" style="text-align: center; color: white;">Score: 0</h2>
+
+    <script>
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+        const box = 20;
+        let snake, direction, foodItems, goldenItems, speed, foodCount, game;
+        let score = 0;
+        let paused = false;
+
+        // Initialize game with settings
+        function startGame() {
+            speed = document.getElementById('speed').value;
+            foodCount = document.getElementById('foodCount').value;
+
+            document.getElementById('settings').style.display = 'none';
+            document.getElementById('gameControls').style.display = 'block';
+
+            score = 0;
+            document.getElementById('score').innerText = "Score: 0";
+            initGame();
+        }
+
+        function initGame() {
+            snake = [{ x: box * 5, y: box * 5 }];
+            direction = 'RIGHT'; // Initialize direction
+            foodItems = generateFood(foodCount);
+            goldenItems = generateGolden(foodItems.length);
+
+            document.addEventListener('keydown', directionControl);
+            game = setInterval(draw, speed); // Run the game loop at the set speed
+        }
+
+        function directionControl(event) {
+            if (event.keyCode === 37 && direction !== 'RIGHT') direction = 'LEFT';
+            else if (event.keyCode === 38 && direction !== 'DOWN') direction = 'UP';
+            else if (event.keyCode === 39 && direction !== 'LEFT') direction = 'RIGHT';
+            else if (event.keyCode === 40 && direction !== 'UP') direction = 'DOWN';
+        }
+
+        function draw() {
+            if (paused) return;
+
+            // Move the snake by creating a new head based on direction
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if (direction === 'LEFT') snakeX -= box;
+            if (direction === 'UP') snakeY -= box;
+            if (direction === 'RIGHT') snakeX += box;
+            if (direction === 'DOWN') snakeY += box;
+
+            // Check for collision with the wall or itself
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision({ x: snakeX, y: snakeY }, snake)) {
+                clearInterval(game); // Stop the game
+                alert("Game Over!");
+                return;
+            }
+
+            // Check if the snake eats red or golden food
+            if (eatFood(snakeX, snakeY)) {
+                foodItems = generateFood(foodCount);
+                goldenItems = generateGolden(foodItems.length);
+            } else if (eatGolden(snakeX, snakeY)) {
+                growSnake(3); // Grow by 3 for golden food
+                score *= 2; // Double the score
+                goldenItems = generateGolden(foodItems.length);
+            } else {
+                snake.pop(); // Remove the tail unless food is eaten
+            }
+
+            const newHead = { x: snakeX, y: snakeY };
+            snake.unshift(newHead); // Add new head to the front of the snake
+
+            // Clear the canvas and redraw everything
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawSnake();
+            drawFood();
+            drawGoldenFood();
+
+            // Update the score
+            document.getElementById('score').innerText = "Score: " + score;
+        }
+
+        function drawSnake() {
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i === 0) ? 'green' : 'lightgreen';
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeStyle = 'darkgreen';
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+            }
+        }
+
+        function drawFood() {
+            ctx.fillStyle = 'red';
+            foodItems.forEach(item => {
+                ctx.fillRect(item.x, item.y, box, box);
+            });
+        }
+
+        function drawGoldenFood() {
+            ctx.fillStyle = 'gold';
+            goldenItems.forEach(item => {
+                ctx.fillRect(item.x, item.y, box, box);
+            });
+        }
+
+        function generateFood(count) {
+            const food = [];
+            for (let i = 0; i < count; i++) {
+                food.push({ x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box });
+            }
+            return food;
+        }
+
+        function generateGolden(count) {
+            const golden = [];
+            for (let i = 0; i < count; i++) {
+                if (Math.random() < 0.1) { // 10% chance
+                    golden.push({ x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box });
+                }
+            }
+            return golden;
+        }
+
+        function eatFood(x, y) {
+            for (let i = 0; i < foodItems.length; i++) {
+                if (x === foodItems[i].x && y === foodItems[i].y) {
+                    score++;
+                    growSnake(1); // Grow by 1 for red food
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function eatGolden(x, y) {
+            for (let i = 0; i < goldenItems.length; i++) {
+                if (x === goldenItems[i].x && y === goldenItems[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function growSnake(amount) {
+            for (let i = 0; i < amount; i++) {
+                snake.push({ x: snake[snake.length - 1].x, y: snake[snake.length - 1].y });
+            }
+        }
+
+        function collision(head, array) {
+            for (let i = 1; i < array.length; i++) {
+                if (head.x === array[i].x && head.y === array[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function pauseGame() {
+            paused = !paused;
+        }
+
+        function restartGame() {
+            clearInterval(game);
+            document.getElementById('settings').style.display = 'block';
+            document.getElementById('gameControls').style.display = 'none';
+            paused = false;
+        }
+    </script>
+</body>
 </html>
 
-<div class="post-content e-content" itemprop="articleBody">
-  {%- if page.toc -%}
-    {% include toc.html html=content %}
-  {%- endif -%}
-  {{ content }}
-</div>
-{%- if page.comments -%}
-  {%- include utterances.html -%}
-{%- endif -%}
-{%- if site.disqus.shortname -%}
-  {%- include disqus_comments.html -%}
-{%- endif -%}
+
+

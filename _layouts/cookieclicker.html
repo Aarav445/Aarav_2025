@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker with Power-Ups</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #cookie {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/619/619112.png');
+            background-size: cover;
+            display: inline-block;
+            margin-top: 50px;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        #upgradeSection {
+            margin-top: 30px;
+        }
+        .upgrade {
+            margin: 10px;
+            font-size: 16px;
+            padding: 10px;
+        }
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cookie Clicker with Power-Ups</h1>
+
+    <div id="cookie" onclick="clickCookie()"></div>
+    <div id="score">Cookies: 0</div>
+
+    <div id="upgradeSection">
+        <h3>Power-Ups</h3>
+        <button class="upgrade" onclick="buyClickUpgrade(1)" id="clickUpgrade1" disabled>Click Power-Up (+1 Cookie per Click) - Cost: 100 Cookies</button>
+        <button class="upgrade" onclick="buyClickUpgrade(2)" id="clickUpgrade2" disabled>Click Power-Up (+5 Cookies per Click) - Cost: 500 Cookies</button>
+        <br>
+        <button class="upgrade" onclick="buyAutoClickUpgrade(1)" id="autoClickUpgrade1" disabled>Auto Click (+1 Cookie per Second) - Cost: 200 Cookies</button>
+        <button class="upgrade" onclick="buyAutoClickUpgrade(2)" id="autoClickUpgrade2" disabled>Auto Click (+5 Cookies per Second) - Cost: 1000 Cookies</button>
+    </div>
+
+    <!-- Sound effect -->
+    <audio id="clickSound">
+        <source src="https://www.myinstants.com/media/sounds/pop-sound-effect.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let cookieCount = 0;
+        let cookiesPerClick = 1;
+        let cookiesPerSecond = 0;
+        let clickUpgrade1Cost = 100;
+        let clickUpgrade2Cost = 500;
+        let autoClickUpgrade1Cost = 200;
+        let autoClickUpgrade2Cost = 1000;
+
+        // Function to handle clicking the cookie
+        function clickCookie() {
+            cookieCount += cookiesPerClick;
+            updateScore();
+            playClickSound();
+            checkUpgrades();
+        }
+
+        // Play a sound when the cookie is clicked
+        function playClickSound() {
+            const sound = document.getElementById('clickSound');
+            sound.play();
+        }
+
+        // Function to update the score display
+        function updateScore() {
+            document.getElementById('score').innerText = `Cookies: ${cookieCount}`;
+        }
+
+        // Function to check if upgrades can be bought
+        function checkUpgrades() {
+            if (cookieCount >= clickUpgrade1Cost) {
+                document.getElementById('clickUpgrade1').disabled = false;
+            }
+            if (cookieCount >= clickUpgrade2Cost) {
+                document.getElementById('clickUpgrade2').disabled = false;
+            }
+            if (cookieCount >= autoClickUpgrade1Cost) {
+                document.getElementById('autoClickUpgrade1').disabled = false;
+            }
+            if (cookieCount >= autoClickUpgrade2Cost) {
+                document.getElementById('autoClickUpgrade2').disabled = false;
+            }
+        }
+
+        // Function to buy click power-up upgrades
+        function buyClickUpgrade(upgrade) {
+            if (upgrade === 1 && cookieCount >= clickUpgrade1Cost) {
+                cookiesPerClick += 1; // Increase cookies per click by 1
+                cookieCount -= clickUpgrade1Cost;
+                document.getElementById('clickUpgrade1').disabled = true;
+                clickUpgrade1Cost *= 2; // Double the cost for future upgrades
+            } else if (upgrade === 2 && cookieCount >= clickUpgrade2Cost) {
+                cookiesPerClick += 5; // Increase cookies per click by 5
+                cookieCount -= clickUpgrade2Cost;
+                document.getElementById('clickUpgrade2').disabled = true;
+                clickUpgrade2Cost *= 2;
+            }
+            updateScore();
+        }
+
+        // Function to buy auto click power-up upgrades
+        function buyAutoClickUpgrade(upgrade) {
+            if (upgrade === 1 && cookieCount >= autoClickUpgrade1Cost) {
+                cookiesPerSecond += 1; // Increase auto cookies per second by 1
+                cookieCount -= autoClickUpgrade1Cost;
+                document.getElementById('autoClickUpgrade1').disabled = true;
+                autoClickUpgrade1Cost *= 2;
+            } else if (upgrade === 2 && cookieCount >= autoClickUpgrade2Cost) {
+                cookiesPerSecond += 5; // Increase auto cookies per second by 5
+                cookieCount -= autoClickUpgrade2Cost;
+                document.getElementById('autoClickUpgrade2').disabled = true;
+                autoClickUpgrade2Cost *= 2;
+            }
+            updateScore();
+        }
+
+        // Function to automatically add cookies per second
+        setInterval(() => {
+            cookieCount += cookiesPerSecond;
+            updateScore();
+            checkUpgrades();
+        }, 1000);
+
+    </script>
+
+</body>
+</html>
