@@ -13,7 +13,7 @@
         #cookie {
             width: 200px;
             height: 200px;
-            background-image: url('https://cdn-icons-png.flaticon.com/512/619/619112.png');
+            background-image: url('https://famouscookies.com/wp-content/uploads/2020/11/Famous-Cookie-Cocolate-Chip-21-1600x1600-1.png');
             background-size: cover;
             display: inline-block;
             margin-top: 50px;
@@ -45,8 +45,12 @@
 
     <div id="upgradeSection">
         <h3>Upgrades</h3>
-        <button class="upgrade" onclick="buyUpgrade(1)" id="autoClick1" disabled>Auto Clicker (+1 Cookie/s) - Cost: 50 Cookies</button>
-        <button class="upgrade" onclick="buyUpgrade(2)" id="autoClick2" disabled>Auto Clicker (+5 Cookies/s) - Cost: 200 Cookies</button>
+        <button class="upgrade" onclick="buyUpgrade(1)" id="autoClick1" disabled>Auto Clicker (+1 Cookie/s) - Cost: 10 Cookies</button>
+        <button class="upgrade" onclick="buyUpgrade(2)" id="autoClick2" disabled>Auto Clicker (+3 Cookies/s) - Cost: 50 Cookies</button>
+        <button class="upgrade" onclick="buyUpgrade(3)" id="autoClick3" disabled>Auto Clicker (+5 Cookies/s) - Cost: 100 Cookies</button>
+        <button class="upgrade" onclick="buyUpgrade(4)" id="autoClick4" disabled>Auto Clicker (+10 Cookies/s) - Cost: 250 Cookies</button>
+        <button class="upgrade" onclick="buyUpgrade(5)" id="autoClick5" disabled>Auto Clicker (+100 Cookies/s) - Cost: 1000 Cookies</button>
+        <button class="upgrade" onclick="buyUpgrade(6)" id="autoClick6" disabled>Auto Clicker (+1000 Cookies/s) - Cost: 100000 Cookies</button>
     </div>
 
     <!-- Sound effect -->
@@ -58,8 +62,12 @@
     <script>
         let cookieCount = 0;
         let cookiesPerSecond = 0;
-        let autoClick1Cost = 50;
-        let autoClick2Cost = 200;
+        let autoClick1Cost = 10;
+        let autoClick2Cost = 50;
+        let autoClick3Cost = 100;
+        let autoClick4Cost = 250;
+        let autoClick5Cost = 1000;
+        let autoClick6Cost = 100000;
 
         // Function to handle clicking the cookie
         function clickCookie() {
@@ -89,23 +97,63 @@
             if (cookieCount >= autoClick2Cost) {
                 document.getElementById('autoClick2').disabled = false;
             }
+            if (cookieCount >= autoClick3Cost) {
+                document.getElementById('autoClick3').disabled = false;
+            }
+            if (cookieCount >= autoClick4Cost) {
+                document.getElementById('autoClick4').disabled = false;
+            }
+            if (cookieCount >= autoClick5Cost) {
+                document.getElementById('autoClick5').disabled = false;
+            }
+            if (cookieCount >= autoClick6Cost) {
+                document.getElementById('autoClick6').disabled = false;
+            }
         }
 
         // Function to buy upgrades
         function buyUpgrade(upgrade) {
+            let cost = 0;
+            let increment = 0;
+
             if (upgrade === 1 && cookieCount >= autoClick1Cost) {
-                cookiesPerSecond += 1;
-                cookieCount -= autoClick1Cost;
-                document.getElementById('autoClick1').disabled = true;
+                increment = 1;
+                cost = autoClick1Cost;
                 autoClick1Cost *= 2; // Increase the cost for future upgrades
             }
             if (upgrade === 2 && cookieCount >= autoClick2Cost) {
-                cookiesPerSecond += 5;
-                cookieCount -= autoClick2Cost;
-                document.getElementById('autoClick2').disabled = true;
+                increment = 3;
+                cost = autoClick2Cost;
                 autoClick2Cost *= 2; // Increase the cost for future upgrades
             }
-            updateScore();
+            if (upgrade === 3 && cookieCount >= autoClick3Cost) {
+                increment = 5;
+                cost = autoClick3Cost;
+                autoClick3Cost *= 2; // Increase the cost for future upgrades
+            }
+            if (upgrade === 4 && cookieCount >= autoClick4Cost) {
+                increment = 10;
+                cost = autoClick4Cost;
+                autoClick4Cost *= 2; // Increase the cost for future upgrades
+            }
+            if (upgrade === 5 && cookieCount >= autoClick5Cost) {
+                increment = 100;
+                cost = autoClick5Cost;
+                autoClick5Cost *= 2; // Increase the cost for future upgrades
+            }
+            if (upgrade === 6 && cookieCount >= autoClick6Cost) {
+                increment = 1000;
+                cost = autoClick6Cost;
+                autoClick6Cost *= 2; // Increase the cost for future upgrades
+            }
+
+            if (increment > 0) {
+                cookiesPerSecond += increment;
+                cookieCount -= cost;
+                document.getElementById(`autoClick${upgrade}`).disabled = true; // Disable the button after purchase
+                updateScore();
+                checkUpgrades();
+            }
         }
 
         // Function to automatically add cookies per second
