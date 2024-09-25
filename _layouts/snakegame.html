@@ -5,43 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Game</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents scrolling */
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
         canvas {
-            border: 1px solid black;
-            display: block;
-            margin: auto;
-            background-color: black; /* Background color changed to black */
+            border: 5px solid white; /* White border for the boundaries */
+            background-color: black;
         }
         #settings {
             text-align: center;
             margin-bottom: 20px;
+            color: black;
         }
         #gameControls {
             display: none;
             text-align: center;
         }
+        h1, h2 {
+            color: black; /* Set title and score text color to black */
+            text-align: center;
+        }
+        label {
+            color: black; /* Set label text color to black */
+        }
+        input, button {
+            background-color: white; /* Input and button background color */
+            color: black; /* Input and button text color */
+            border: 1px solid black; /* Border for inputs and buttons */
+            padding: 5px; /* Padding for better appearance */
+            margin-top: 5px; /* Margin for spacing */
+        }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; color: white;">Snake Game</h1>
+    <div>
+        <h1>Snake Game</h1>
+        <div id="settings">
+            <label for="speed">Choose Speed: </label>
+            <input type="number" id="speed" value="100" min="50" max="500" step="10">
+            <br><br>
+            <label for="foodCount">Number of Red Squares (1-10): </label>
+            <input type="number" id="foodCount" value="1" min="1" max="10">
+            <br><br>
+            <button onclick="startGame()">Start Game</button>
+        </div>
 
-    <div id="settings">
-        <label for="speed">Choose Speed: </label>
-        <input type="number" id="speed" value="100" min="50" max="500" step="10">
-        <br><br>
-        <label for="foodCount">Number of Red Squares (1-10): </label>
-        <input type="number" id="foodCount" value="1" min="1" max="10">
-        <br><br>
-        <button onclick="startGame()">Start Game</button>
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+
+        <div id="gameControls">
+            <button onclick="pauseGame()">Pause/Resume</button>
+            <button onclick="restartGame()">Restart Game</button>
+        </div>
+
+        <h2 id="score">Score: 0</h2>
     </div>
-
-    <canvas id="snakeCanvas" width="400" height="400"></canvas>
-    
-    <div id="gameControls">
-        <button onclick="pauseGame()">Pause/Resume</button>
-        <button onclick="restartGame()">Restart Game</button>
-    </div>
-
-    <h2 id="score" style="text-align: center; color: white;">Score: 0</h2>
 
     <script>
         const canvas = document.getElementById('snakeCanvas');
@@ -84,7 +108,6 @@
         function draw() {
             if (paused) return;
 
-            // Move the snake by creating a new head based on direction
             let snakeX = snake[0].x;
             let snakeY = snake[0].y;
 
@@ -93,35 +116,31 @@
             if (direction === 'RIGHT') snakeX += box;
             if (direction === 'DOWN') snakeY += box;
 
-            // Check for collision with the wall or itself
             if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision({ x: snakeX, y: snakeY }, snake)) {
-                clearInterval(game); // Stop the game
+                clearInterval(game); 
                 alert("Game Over!");
                 return;
             }
 
-            // Check if the snake eats red or golden food
             if (eatFood(snakeX, snakeY)) {
                 foodItems = generateFood(foodCount);
                 goldenItems = generateGolden(foodItems.length);
             } else if (eatGolden(snakeX, snakeY)) {
-                growSnake(3); // Grow by 3 for golden food
-                score *= 2; // Double the score
+                growSnake(3); 
+                score *= 2; 
                 goldenItems = generateGolden(foodItems.length);
             } else {
-                snake.pop(); // Remove the tail unless food is eaten
+                snake.pop(); 
             }
 
             const newHead = { x: snakeX, y: snakeY };
-            snake.unshift(newHead); // Add new head to the front of the snake
+            snake.unshift(newHead); 
 
-            // Clear the canvas and redraw everything
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawSnake();
             drawFood();
             drawGoldenFood();
 
-            // Update the score
             document.getElementById('score').innerText = "Score: " + score;
         }
 
@@ -159,7 +178,7 @@
         function generateGolden(count) {
             const golden = [];
             for (let i = 0; i < count; i++) {
-                if (Math.random() < 0.1) { // 10% chance
+                if (Math.random() < 0.1) {
                     golden.push({ x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box });
                 }
             }
@@ -170,7 +189,7 @@
             for (let i = 0; i < foodItems.length; i++) {
                 if (x === foodItems[i].x && y === foodItems[i].y) {
                     score++;
-                    growSnake(1); // Grow by 1 for red food
+                    growSnake(1);
                     return true;
                 }
             }
@@ -215,5 +234,18 @@
 </body>
 </html>
 
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-
+{% if site.remote_theme contains 'minima' %}
+  {%- include theme/minima/base.html -%}
+{% elsif site.remote_theme contains 'midnight' %}
+  {%- include theme/midnight/base.html -%}
+{% elsif site.remote_theme contains 'dinky' %}
+  {%- include theme/dinky/base.html -%}
+{% elsif site.remote_theme contains 'time-machine' %}
+  {%- include theme/time-machine/base.html -%}
+{% elsif site.remote_theme contains 'cayman' %}
+  {%- include theme/cayman/base.html -%}
+{% endif %}
+</html>
