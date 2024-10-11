@@ -31,4 +31,195 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Profile & Unique ID Generator</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        th, td {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Profile Information & Unique ID</h1>
+    <button onclick="displayProfile()">Generate Random Profile</button>
+    
+    <table id="profileTable" style="display:none;">
+        <tr>
+            <th>Full Name</th>
+            <td id="fullName"></td>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td id="age"></td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td id="city"></td>
+        </tr>
+        <tr>
+            <th>Favorite Animal</th>
+            <td id="animal"></td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td id="phone"></td>
+        </tr>
+        <tr>
+            <th>Generated ID</th>
+            <td id="generatedID"></td>
+        </tr>
+    </table>
 
+    <script>
+        // Arrays of random values for random profile generation
+        const names = ["Jane Smith", "John Doe", "Emily Johnson", "Michael Brown", "Alice Green"];
+        const cities = ["New York", "San Francisco", "Chicago", "Miami", "Los Angeles"];
+        const animals = ["Dolphin", "Tiger", "Elephant", "Eagle", "Penguin"];
+        const phoneNumbers = ["123-456-7890", "987-654-3210", "555-666-7777", "888-999-0000", "222-333-4444"];
+
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function getRandomAge(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateUniqueID(fullName, phone) {
+            // Extracting initials from full name
+            const nameParts = fullName.split(" ");
+            const initials = nameParts.map(name => name.charAt(0)).join("");
+
+            // Extracting last 4 digits of phone number
+            const phoneLast4 = phone.slice(-4);
+
+            // Using timestamp and random number to add uniqueness
+            const timestamp = Date.now();
+            const randomNum = Math.floor(Math.random() * 1000);
+
+            // Concatenating initials, phone last 4 digits, timestamp, and random number to form a unique ID
+            return initials + phoneLast4 + timestamp + randomNum;
+        }
+
+        function displayProfile() {
+            // Randomly generating profile data
+            const fullName = getRandomElement(names);
+            const age = getRandomAge(18, 60); // Random age between 18 and 60
+            const city = getRandomElement(cities);
+            const favoriteAnimal = getRandomElement(animals);
+            const phone = getRandomElement(phoneNumbers);
+            
+            // Generate a unique ID based on the full name, phone number, and other parameters
+            const uniqueID = generateUniqueID(fullName, phone);
+
+            // Store the unique ID in localStorage
+            localStorage.setItem('profileID', uniqueID);
+
+            // Display the data in a table
+            document.getElementById("fullName").textContent = fullName;
+            document.getElementById("age").textContent = age;
+            document.getElementById("city").textContent = city;
+            document.getElementById("animal").textContent = favoriteAnimal;
+            document.getElementById("phone").textContent = phone;
+            document.getElementById("generatedID").textContent = uniqueID;
+
+            // Show the table
+            document.getElementById("profileTable").style.display = "table";
+
+            // Logging the full profile info to the console for debugging
+            const profile = {
+                fullName: fullName,
+                age: age,
+                city: city,
+                favoriteAnimal: favoriteAnimal,
+                phone: phone,
+                uniqueID: uniqueID
+            };
+            console.log(profile);
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Validator</title>
+</head>
+<body>
+    <h1>Password Validator</h1>
+    <input type="password" id="passwordInput" placeholder="Enter your password">
+    <button onclick="validatePassword()">Validate Password</button>
+
+    <p id="validationOutput"></p>
+
+    <script>
+        // Password validation criteria
+        function validatePassword() {
+            const password = document.getElementById('passwordInput').value;
+            const minLength = 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasLowercase = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            let validationMessage = "Password must meet the following criteria:<br>";
+
+            // Check password length
+            if (password.length >= minLength) {
+                validationMessage += "✔️ At least " + minLength + " characters long<br>";
+            } else {
+                validationMessage += "❌ At least " + minLength + " characters long<br>";
+            }
+
+            // Check for uppercase letter
+            if (hasUppercase) {
+                validationMessage += "✔️ Contains an uppercase letter<br>";
+            } else {
+                validationMessage += "❌ Contains an uppercase letter<br>";
+            }
+
+            // Check for lowercase letter
+            if (hasLowercase) {
+                validationMessage += "✔️ Contains a lowercase letter<br>";
+            } else {
+                validationMessage += "❌ Contains a lowercase letter<br>";
+            }
+
+            // Check for a number
+            if (hasNumber) {
+                validationMessage += "✔️ Contains a number<br>";
+            } else {
+                validationMessage += "❌ Contains a number<br>";
+            }
+
+            // Check for special character
+            if (hasSpecialChar) {
+                validationMessage += "✔️ Contains a special character<br>";
+            } else {
+                validationMessage += "❌ Contains a special character<br>";
+            }
+
+            // Check overall validation
+            if (password.length >= minLength && hasUppercase && hasLowercase && hasNumber && hasSpecialChar) {
+                validationMessage += "<br><strong>Password is strong!</strong>";
+            } else {
+                validationMessage += "<br><strong>Password is weak!</strong>";
+            }
+
+            // Output the validation results
+            document.getElementById('validationOutput').innerHTML = validationMessage;
+        }
+    </script>
+</body>
+</html>
