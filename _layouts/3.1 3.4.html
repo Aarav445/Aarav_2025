@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Creation</title>
+</head>
+<body>
+    <h1>Profile Creation</h1>
+    <button onclick="createProfile()">Create Profile</button>
+    
+    <p id="profileOutput"></p>
 
-{% if site.remote_theme contains 'minima' %}
-  {%- include theme/minima/base.html -%}
-{% elsif site.remote_theme contains 'midnight' %}
-  {%- include theme/midnight/base.html -%}
-{% elsif site.remote_theme contains 'dinky' %}
-  {%- include theme/dinky/base.html -%}
-{% elsif site.remote_theme contains 'time-machine' %}
-  {%- include theme/time-machine/base.html -%}
-{% elsif site.remote_theme contains 'cayman' %}
-  {%- include theme/cayman/base.html -%}
-{% endif %}
+    <script>
+        function createProfile() {
+            const name = prompt("What is your name?");
+            const age = prompt("What is your age?");
+            const favoriteGame = prompt("What is your favorite game?");
+
+            const profile = {
+                name: name,
+                age: age,
+                favoriteGame: favoriteGame
+            };
+
+            document.getElementById('profileOutput').innerHTML = 
+                `Hi, my name is ${name}, I am ${age} years old, and my favorite game is ${favoriteGame}.`;
+
+            console.log(profile);
+        }
+    </script>
+</body>
 </html>
+
