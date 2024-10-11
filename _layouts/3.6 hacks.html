@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        input {
+            margin: 10px;
+            padding: 8px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Comparison</h1>
+    <p>Enter two numbers:</p>
+    <input type="number" id="num1" placeholder="First Number">
+    <input type="number" id="num2" placeholder="Second Number">
+    <button onclick="compareNumbers()">Compare</button>
+    <div id="result"></div>
+
+    <script>
+        function compareNumbers() {
+            // Get values from input fields
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const resultDiv = document.getElementById('result');
+
+            // Clear previous result
+            resultDiv.innerHTML = '';
+
+            // Check if the numbers are equal
+            if (num1 === num2) {
+                resultDiv.innerHTML = "The numbers are equal.";
+            } else {
+                // If not equal, determine which number is larger
+                if (num1 > num2) {
+                    resultDiv.innerHTML = `${num1} is larger than ${num2}.`;
+                } else {
+                    resultDiv.innerHTML = `${num2} is larger than ${num1}.`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        input {
+            margin: 10px;
+            padding: 8px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Triangle Classifier</h1>
+    <p>Enter the lengths of the three sides of a triangle:</p>
+    <input type="number" id="side1" placeholder="Length of Side 1" min="0">
+    <input type="number" id="side2" placeholder="Length of Side 2" min="0">
+    <input type="number" id="side3" placeholder="Length of Side 3" min="0">
+    <button onclick="classifyTriangle()">Classify Triangle</button>
+    <div id="result"></div>
+
+    <script>
+        function classifyTriangle() {
+            // Get the values from the input fields
+            const side1 = parseFloat(document.getElementById('side1').value);
+            const side2 = parseFloat(document.getElementById('side2').value);
+            const side3 = parseFloat(document.getElementById('side3').value);
+            const resultDiv = document.getElementById('result');
+
+            // Clear previous result
+            resultDiv.innerHTML = '';
+
+            // Validate if sides are positive numbers
+            if (side1 <= 0 || side2 <= 0 || side3 <= 0) {
+                resultDiv.innerHTML = "Please enter positive numbers only.";
+                return;
+            }
+
+            // Check if the sides can form a valid triangle
+            if ((side1 + side2 > side3) && (side1 + side3 > side2) && (side2 + side3 > side1)) {
+                // Nested conditionals to classify the triangle
+                if (side1 === side2 && side2 === side3) {
+                    resultDiv.innerHTML = "The triangle is an Equilateral Triangle.";
+                } else if (side1 === side2 || side1 === side3 || side2 === side3) {
+                    resultDiv.innerHTML = "The triangle is an Isosceles Triangle.";
+                } else {
+                    resultDiv.innerHTML = "The triangle is a Scalene Triangle.";
+                }
+            } else {
+                resultDiv.innerHTML = "The lengths entered cannot form a valid triangle.";
+            }
+        }
+    </script>
+</body>
+</html>
+
