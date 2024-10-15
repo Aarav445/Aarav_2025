@@ -233,4 +233,104 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #444;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            padding-top: 10px;
+        }
+    </style>
+    <script>
+        // Example 1: Function to calculate y value
+        function output(x) {
+            let y = 7 * (x + 4) - 6;
+            document.getElementById("result1").textContent = `For x = ${x}, y = ${y}`;
+        }
+
+        // Example 2: Basic arithmetic operations based on instructions
+        function calculate() {
+            let number1 = 8;
+            let number2 = 3;
+            let number3 = number1 % number2;
+            let number4 = number3 * number1 + 70;
+            document.getElementById("result2").textContent = `The output is ${number4}`;
+        }
+
+        // Example 3: Divisibility check for user input
+        function checkDivisibility() {
+            let num = parseInt(document.getElementById("inputNumber").value);
+            let remainder = num % 3;
+            let result;
+            if (remainder === 0) {
+                result = `${num} is divisible by 3`;
+            } else {
+                result = `The remainder when ${num} is divided by 3 is ${remainder}`;
+            }
+            document.getElementById("result3").textContent = result;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Example 1 - Calculate y for y = 7(x+4)-6</h2>
+        <input type="number" id="xValue" placeholder="Enter x value">
+        <button onclick="output(parseInt(document.getElementById('xValue').value))">Calculate</button>
+        <p id="result1"></p>
+    </div>
+
+    <div class="container">
+        <h2>Example 2 - Arithmetic Operations</h2>
+        <button onclick="calculate()">Show Result</button>
+        <p id="result2"></p>
+    </div>
+
+    <div class="container">
+        <h2>Example 3 - Divisibility Check</h2>
+        <input type="number" id="inputNumber" placeholder="Enter a number">
+        <button onclick="checkDivisibility()">Check Divisibility</button>
+        <p id="result3"></p>
+    </div>
+</body>
+</html>
 
