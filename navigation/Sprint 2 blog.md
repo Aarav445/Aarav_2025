@@ -33,11 +33,12 @@ Summary:
 Adjust our presentation styles to suit different learning preferences, using a mix of visuals, examples, and interactive activities to engage students effectively.
 Respond to student questions in a clear and accessible manner, ensuring they understood the answers.
 Prepare diligently for each lesson by practicing explanations and anticipating potential areas of confusion.
-Through the process of designing our lessons, we also learned:
+
+Challenges and how we dealt with them:
 
 We encountered many challenges, particularly since much of our learning was self-directed. For example, some of our pull requests were initially rejected by Mr. Mort, and we once submitted code without testing it locally. Each of these setbacks helped us learn and improve our approach.
 Effective time management. We created detailed schedules, dividing tasks among team members and setting clear timelines, which kept us on track.
-The value of teamwork. Having a structured schedule helped us coordinate better, ensuring everyone understood their roles and responsibilities, leading to smoother collaboration.
+Having a structured schedule helped us coordinate better, ensuring everyone understood their roles and responsibilities, leading to smoother collaboration.
 
 
 
@@ -47,4 +48,4 @@ The value of teamwork. Having a structured schedule helped us coordinate better,
 
 
 
-\
+
