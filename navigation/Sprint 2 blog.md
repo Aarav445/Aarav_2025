@@ -27,18 +27,15 @@ Lesson 3.7	Complex conditional structures and Chaining conditions
 
 Lesson 3.10	List indexing and slicing and Iterating through lists	
 
-Extra Summary of What I Learned
+Summary:
 
-During our teaching journey, we gained insights into how to:
-
-Simplify complex subjects and build back up to the intricate details. For example, we started with simpler popcorn hacks and progressively moved to more challenging homework hacks that combined all concepts.
+ We learned how to simplify complex subjects and build back up to the intricate details. For example, we started with simpler popcorn hacks and progressively moved to more challenging homework hacks that combined all concepts.
 Adjust our presentation styles to suit different learning preferences, using a mix of visuals, examples, and interactive activities to engage students effectively.
 Respond to student questions in a clear and accessible manner, ensuring they understood the answers.
 Prepare diligently for each lesson by practicing explanations and anticipating potential areas of confusion.
 Through the process of designing our lessons, we also learned:
 
-The need for thorough knowledge. Teaching others meant we had to deeply understand the material, which led us to research beyond the standard resources to ensure we could answer any questions.
-How to embrace mistakes. We encountered many challenges, particularly since much of our learning was self-directed. For example, some of our pull requests were initially rejected by Mr. Mort, and we once submitted code without testing it locally. Each of these setbacks helped us learn and improve our approach.
+We encountered many challenges, particularly since much of our learning was self-directed. For example, some of our pull requests were initially rejected by Mr. Mort, and we once submitted code without testing it locally. Each of these setbacks helped us learn and improve our approach.
 Effective time management. We created detailed schedules, dividing tasks among team members and setting clear timelines, which kept us on track.
 The value of teamwork. Having a structured schedule helped us coordinate better, ensuring everyone understood their roles and responsibilities, leading to smoother collaboration.
 
