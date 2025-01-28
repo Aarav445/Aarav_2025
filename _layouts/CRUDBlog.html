@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 5px;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .code-block {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: Consolas, Monaco, Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CRUD Blog</h1>
+
+        <h2>Purpose of My Group's Program</h2>
+        <p>
+            The purpose of our group's program is to provide a platform for club leaders and members at
+            <strong>Del Norte High School</strong> to communicate more effectively. The website streamlines the management of:
+        </p>
+        <ul>
+            <li>Events</li>
+            <li>Announcements</li>
+            <li>Leadership roles</li>
+            <li>Member organization</li>
+        </ul>
+        <p>
+            It also enables students to discover clubs that match their interests, encouraging greater participation. Many clubs currently lack a consistent communication platform—some use Instagram, others rely on group chats, while some have no system at all. This website simplifies communication by bringing all clubs together in one shared space.
+        </p>
+
+        <h2>My Individual Feature's Purpose</h2>
+        <p>
+            My individual feature allows users to manage their bios within their profiles seamlessly. Users can personalize their profiles by:
+        </p>
+        <ul>
+            <li>Adding or editing their bios to ensure the information remains relevant and up-to-date.</li>
+            <li>Removing outdated bios as needed.</li>
+        </ul>
+        <p>
+            This feature enhances user engagement by enabling members to share meaningful details about themselves, allowing for better connections and interactions within the platform.
+        </p>
+
+        <h2>Input/Output Requests</h2>
+        <p>
+            Within the frontend, whenever a user submits a profile, data is sent to the backend via an API request.
+            This new data is then stored in the database within the <code>user_management.db</code> file.
+        </p>
+
+        <img src="image-18.png" alt="Database Diagram">
+        <img src="image-19.png" alt="Frontend Form">
+        <img src="image-20.png" alt="Profile Management UI">
+
+        <h2>Code Explanation</h2>
+        <p>
+            The code below defines a SQLAlchemy model class named <code>Bio</code>, representing a database table called
+            <strong>'bio'</strong>. This table stores user profile information with the following fields:
+        </p>
+        <ul>
+            <li><code>id</code>: A unique primary key.</li>
+            <li><code>uid</code>: A unique user identifier.</li>
+            <li><code>name</code>: The user's name.</li>
+            <li><code>password</code>: The user's password.</li>
+            <li><code>bio</code>: A personal description.</li>
+            <li><code>profile_picture</code>: A string for storing the filename or URL of the profile picture.</li>
+            <li><code>created_at</code>: A timestamp with a default value of the current time.</li>
+        </ul>
+        <p>
+            The <code>__repr__</code> method returns a string representation of the object for debugging. This model ensures structured storage of user profiles and facilitates efficient database operations.
+        </p>
+
+        <div class="code-block">
+            <pre>
+from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy.sql import func
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class Bio(Base):
+    __tablename__ = 'bio'
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    uid = Column(String(50), unique=True, nullable=False)
+    name = Column(String(100), nullable=False)
+    password = Column(String(255), nullable=False)
+    bio = Column(Text, nullable=True)
+    profile_picture = Column(String(255), nullable=True)
+    created_at = Column(DateTime, default=func.now())
+
+    def __repr__(self):
+        return f"<Bio(id={self.id}, name='{self.name}', uid='{self.uid}')>"
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
