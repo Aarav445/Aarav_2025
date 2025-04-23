@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Strength Checker & Generator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
+    input, button { margin: 5px 0; width: 100%; padding: 10px; font-size: 16px; }
+    .result { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h2>🔐 Password Strength Checker</h2>
+  <input type="text" id="passwordInput" placeholder="Enter your password here">
+  <button onclick="checkStrength()">Check Strength</button>
+  <div id="strengthResult" class="result"></div>
+
+  <h2>🛠️ Password Generator</h2>
+  <input type="number" id="lengthInput" placeholder="Enter password length (min 8)">
+  <button onclick="generatePassword()">Generate Password</button>
+  <div id="generatedPassword" class="result"></div>
+
+  <script>
+    const commonPasswords = ["123456", "password", "qwerty", "letmein", "123123", "admin"];
+
+    function checkStrength() {
+      const pw = document.getElementById("passwordInput").value;
+      let score = 0;
+
+      if (pw.length >= 12) score += 2;
+      else if (pw.length >= 8) score += 1;
+
+      if (/[a-z]/.test(pw)) score += 1;
+      if (/[A-Z]/.test(pw)) score += 1;
+      if (/[0-9]/.test(pw)) score += 1;
+      if (/[^A-Za-z0-9]/.test(pw)) score += 1;
+
+      if (commonPasswords.includes(pw)) score = 0;
+
+      let strength = "";
+      if (score >= 6) strength = "🔒 Very Strong";
+      else if (score >= 4) strength = "🔐 Strong";
+      else if (score >= 2) strength = "⚠️ Weak";
+      else strength = "❌ Very Weak";
+
+      document.getElementById("strengthResult").innerText = "Strength: " + strength;
+    }
+
+    function generatePassword() {
+      const length = parseInt(document.getElementById("lengthInput").value);
+      if (isNaN(length) || length < 8) {
+        document.getElementById("generatedPassword").innerText = "Please enter a length of at least 8.";
+        return;
+      }
+
+      const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}<>?";
+      let pw = "";
+      for (let i = 0; i < length; i++) {
+        pw += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+
+      document.getElementById("generatedPassword").innerText = "Generated Password: " + pw;
+    }
+  </script>
+
+</body>
+</html>
